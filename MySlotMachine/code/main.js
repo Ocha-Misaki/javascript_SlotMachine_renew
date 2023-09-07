@@ -18,7 +18,6 @@
     const slotBodyElement = document.querySelector('div')
     slotBodyElement.appendChild(divElement)
   }
-
   createElement('img1', 'stop1')
   createElement('img2', 'stop2')
   createElement('img3', 'stop3')
@@ -32,6 +31,7 @@
   const stop2 = document.getElementById('stop2')
   const stop3 = document.getElementById('stop3')
 
+  //spinボタンを押してスロットを回す時の処理
   spin.addEventListener('click', () => {
     let intervalID1 = spinningSlot(img1)
     let intervalID2 = spinningSlot(img2)
@@ -41,6 +41,7 @@
     addStopProcess(stop3, intervalID3)
   })
 
+  //一定時間おきに画像を切り替える
   const spinningSlot = (img) => {
     let intervalID = setInterval(() => {
       img.src = switchImage()
