@@ -1,27 +1,33 @@
 'use strict'
 {
   class Slot {
-    constructor(id) {
-      const divElement = document.createElement('div')
-      divElement.classList.add('slot-panel')
+    constructor(id, num) {
+      this.reels = []
+      for (let i = 0; i < num; i++) {
+        const divElement = document.createElement('div')
+        divElement.classList.add('slot-panel')
 
-      this.img = document.createElement('img')
-      this.img.src = 'bell.png'
+        const img = document.createElement('img')
+        img.src = 'bell.png'
 
-      this.stop = document.createElement('button')
-      this.stop.textContent = 'STOP'
+        const stop = document.createElement('button')
+        stop.textContent = 'STOP'
+        this.reels.push({ imageEl: img, stopEl: stop })
 
-      divElement.appendChild(this.img)
-      divElement.appendChild(this.stop)
-      const slotBodyElement = document.getElementById(id)
-      slotBodyElement.appendChild(divElement)
+        divElement.appendChild(img)
+        divElement.appendChild(stop)
+        const slotBodyElement = document.getElementById(id)
+        slotBodyElement.appendChild(divElement)
+      }
     }
 
     start() {
       const spin = document.getElementById('spin')
       spin.addEventListener('click', () => {
-        let intervalID = this.spinningSlot(this.img)
-        this.addStopProcess(this.stop, intervalID)
+        this.reels.forEach((reel) => {
+          let intervalID = this.spinningSlot(reel.imageEl)
+          this.addStopProcess(reel.stopEl, intervalID)
+        })
       })
     }
     spinningSlot(img) {
@@ -42,8 +48,7 @@
       })
     }
   }
-  const slots = [new Slot('slot'), new Slot('slot'), new Slot('slot')]
-  slots.forEach((slot) => {
-    slot.start()
-  })
+
+  const slot = new Slot('slot', 3)
+  slot.start()
 }
